@@ -101,6 +101,11 @@ public class User {
 		this.age = age;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("{%s, %s, %s, %d}", this.username, this.name, this.surname, this.age);
+	}
+
 	
 	
 	

@@ -43,34 +43,22 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean addUser(User user) {
 		HttpEntity<User> requestEntity = new HttpEntity<>(user, headers);
-		
-		try {
-            ResponseEntity<String> response = restTemplate.exchange(userApiUrl, HttpMethod.POST, requestEntity, String.class);
-            if (response.getStatusCode() == HttpStatus.CREATED) {
-                return true;
-            } else {
-                System.err.println("Failed to add user. Response: " + response.getBody());
-                return false;
-            }
-        } catch (RestClientException e) {
-            System.err.println("Failed to add user: " + e.getMessage());
-            return false;
+		ResponseEntity<String> response = restTemplate.exchange(userApiUrl, HttpMethod.POST, requestEntity, String.class);
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return true;
         }
+        System.err.println("Failed to add user. Response: " + response.getBody());
+        return false;
 	}
 
 	@Override
 	public boolean deleteUser(int id) {
-        try {
-        	ResponseEntity<String> responseEntity = restTemplate.getForEntity(userApiUrl + "/deleteUser/" + id, String.class);
-            
-            if(responseEntity.getStatusCode() == HttpStatus.valueOf(200)) {
-            	return true;
-            }
-            return false;
-        } catch (RestClientException e) {
-            System.err.println("Failed to delete user: " + e.getMessage());
-            return false;
+		ResponseEntity<String> responseEntity = restTemplate.getForEntity(userApiUrl + "/deleteUser/" + id, String.class);
+        
+        if(responseEntity.getStatusCode() == HttpStatus.valueOf(200)) {
+        	return true;
         }
+        return false;
     }
 
 	@Override
