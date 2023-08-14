@@ -7,7 +7,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Username</th>
+                <th>Email</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Age</th>
@@ -18,7 +18,7 @@
             <c:forEach items="${users}" var="user">
                 <tr>
                     <td>${user.id}</td>
-                    <td>${user.username}</td>
+                    <td>${user.email}</td>
                     <td>${user.name}</td>
                     <td>${user.surname}</td>
                     <td>${user.age}</td>

@@ -8,8 +8,8 @@ import org.hibernate.validator.constraints.NotBlank;
 public class User {
 	public int id;
 	
-	@NotBlank(message = "Please enter your username")
-	private String username;
+	@NotBlank(message = "Please enter your email")
+	private String email;
     
 	@NotBlank(message = "Please enter your name")
 	private String name;
@@ -23,18 +23,18 @@ public class User {
 	
 	public User() {}
 
-	public User(String username, String name, String surname, int age) {
+	public User(String email, String name, String surname, int age) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.name = name;
 		this.surname = surname;
 		this.age = age;
 	}
 
-	public User(int id, String username, String name, String surname, int age) {
+	public User(int id, String email, String name, String surname, int age) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.email = email;
 		this.name = name;
 		this.surname = surname;
 		this.age = age;
@@ -51,12 +51,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
@@ -80,9 +80,6 @@ public class User {
 		return surname;
 	}
 
-
-
-
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
@@ -103,13 +100,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return String.format("{%s, %s, %s, %d}", this.username, this.name, this.surname, this.age);
+		return String.format("{%s, %s, %s, %d}", this.email, this.name, this.surname, this.age);
 	}
-
-	
-	
-	
-	
-	
 
 }
