@@ -9,9 +9,9 @@
     </c:if>
     <form:form modelAttribute="user" method="post">
         <div class="form-group">
-            <label for="username">Username:</label>
-            <form:input path="username" class="form-control"/>
-            <form:errors path="username" cssClass="text-danger" />
+            <label for="email">Email:</label>
+            <form:input path="email" class="form-control"/>
+            <form:errors path="email" cssClass="text-danger" />
         </div>
         <div class="form-group">
             <label for="name">Name:</label>
