@@ -20,28 +20,17 @@ public class LoggingAspect {
 	
 	static Logger log = Logger.getRootLogger();
 	
-	@Pointcut("execution(* com.kerem.userman.controller.*Controller.*(..))")
-	public void controllerPointcut( ) {
+	@Pointcut("execution(* com.kerem.userman.controller.UserController.*(..))")
+	public void userControllerPointcut( ) {
 		// NO-OP
 	}
 
-    @Before("controllerPointcut()")
-    public void logControllerBeforeMethods(JoinPoint joinPoint) {
-    	String className = joinPoint.getTarget().getClass().getSimpleName();
-        String methodName = joinPoint.getSignature().getName();
-        
-        Object[] args = joinPoint.getArgs();
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String httpMethod = request.getMethod();
-        StringBuilder argString = new StringBuilder();
-        for (Object arg : args) {
-            argString.append(arg).append(", ");
-        }
-        
-        log.info("Executing [" + httpMethod + "]" + className + "." + methodName + "(), Arguments: " + argString);
+    @Before("userControllerPointcut()")
+    public void userControllerBeforeMethods(JoinPoint joinPoint) {
+    	beforeLog(joinPoint);
     }
     
-    @AfterReturning(pointcut = "controllerPointcut()", returning = "result")
+    @AfterReturning(pointcut = "userControllerPointcut()", returning = "result")
     public void logControllerAfterMethods(JoinPoint joinPoint, Object result) {
     	String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
@@ -52,7 +41,7 @@ public class LoggingAspect {
         log.info("Executed [" + httpMethod + "]" + className + "." + methodName + "(), Go page: " + result);
     }
     
-    @Around("controllerPointcut()")
+    @Around("userControllerPointcut()")
     public Object handleControllerMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             return (String) joinPoint.proceed();
@@ -63,5 +52,19 @@ public class LoggingAspect {
             
             return "error";
         }
+    }
+    
+    private void beforeLog(JoinPoint joinPoint) {
+    	String className = joinPoint.getTarget().getClass().getSimpleName();
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String httpMethod = request.getMethod();
+        StringBuilder argString = new StringBuilder();
+        for (Object arg : args) {
+            argString.append(arg).append(", ");
+        }
+        
+        log.info("Executing [" + httpMethod + "]" + className + "." + methodName + "(), Arguments: " + argString);
     }
 }

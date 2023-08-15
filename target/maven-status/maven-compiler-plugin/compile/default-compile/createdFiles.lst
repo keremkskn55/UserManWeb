@@ -1,5 +1,9 @@
 com\kerem\userman\service\impl\UserServiceImpl.class
 com\kerem\userman\controller\UserController.class
+com\kerem\userman\controller\AuthController.class
+com\kerem\userman\service\AuthService.class
 com\kerem\userman\aop\LoggingAspect.class
+com\kerem\userman\service\impl\AuthServiceImpl.class
+com\kerem\userman\model\SignInCredential.class
 com\kerem\userman\service\UserService.class
 com\kerem\userman\model\User.class
