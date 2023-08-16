@@ -40,12 +40,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User> getUsers() {
-		User[] users = restTemplate.getForObject(userApiUrl, User[].class);
+		setJwtTokenToHeader();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		ResponseEntity<User[]> response = restTemplate.exchange(userApiUrl, HttpMethod.GET, requestEntity, User[].class);
+		User[] users = response.getBody();
         return Arrays.asList(users);
 	}
 	
 	@Override
 	public boolean addUser(User user) {
+		setJwtTokenToHeader();
 		HttpEntity<User> requestEntity = new HttpEntity<>(user, headers);
 		ResponseEntity<String> response = restTemplate.exchange(userApiUrl, HttpMethod.POST, requestEntity, String.class);
         if (response.getStatusCode() == HttpStatus.CREATED) {
@@ -57,9 +61,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean deleteUser(int id) {
-		ResponseEntity<String> responseEntity = restTemplate.getForEntity(userApiUrl + "/deleteUser/" + id, String.class);
+		setJwtTokenToHeader();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(userApiUrl + "/deleteUser/" + id, HttpMethod.GET, requestEntity, String.class);
+		// ResponseEntity<String> responseEntity = restTemplate.getForEntity(userApiUrl + "/deleteUser/" + id, String.class);
         
-        if(responseEntity.getStatusCode() == HttpStatus.valueOf(200)) {
+        if(response.getStatusCode() == HttpStatus.valueOf(200)) {
         	return true;
         }
         return false;
@@ -67,11 +74,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getUserById(int id) {
-		return restTemplate.getForObject(userApiUrl + "/" + id, User.class);
+		setJwtTokenToHeader();
+		HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+		ResponseEntity<User> response = restTemplate.exchange(userApiUrl + "/" + id, HttpMethod.GET, requestEntity, User.class);
+		return response.getBody();
+		// return restTemplate.getForObject(userApiUrl + "/" + id, User.class);
 	}
 
 	@Override
 	public boolean updateUser(User user) {
+		setJwtTokenToHeader();
 		HttpEntity<User> requestEntity = new HttpEntity<>(user, headers);
 		ResponseEntity<String> response = restTemplate.exchange(userApiUrl + "/updateUser", HttpMethod.POST, requestEntity, String.class);
         if (response.getStatusCode() == HttpStatus.valueOf(200)) {
@@ -81,10 +93,11 @@ public class UserServiceImpl implements UserService{
         return false;
 	}
 	
-	private String getJwtToken() {
+	public void setJwtTokenToHeader() {
     	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession();
-        return (String) session.getAttribute("jwtToken");
+        String token = (String) session.getAttribute("jwtToken");
+        headers.set("Authorization", "Bearer " + token);
 	}
 }
 
