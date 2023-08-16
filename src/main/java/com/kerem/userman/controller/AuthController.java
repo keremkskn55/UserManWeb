@@ -2,6 +2,8 @@ package com.kerem.userman.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.kerem.userman.model.SignInCredential;
@@ -44,16 +46,17 @@ public class AuthController {
     }
 	
 	@PostMapping("/signIn")
-    public String saveUser(@Valid SignInCredential signInCredential, BindingResult bindingResult, Model model) {
+    public String saveUser(HttpServletRequest request, @Valid SignInCredential signInCredential, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 	        return "login";
 	    }
 		
 		String token = authService.login(signInCredential);
-        
+		
         if (token != null) {
-        	model.addAttribute("jwtToken", token);
-        	return "login-loading";
+        	HttpSession session = request.getSession();
+    	    session.setAttribute("jwtToken", token);
+        	return "redirect:/users/addUser";
         }
         else {
         	model.addAttribute("errorMessage", "Failed to login. Please try again.");

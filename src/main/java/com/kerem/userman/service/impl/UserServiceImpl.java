@@ -2,6 +2,8 @@ package com.kerem.userman.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.kerem.userman.model.User;
 import com.kerem.userman.service.UserService;
 
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +79,12 @@ public class UserServiceImpl implements UserService{
         }
         System.err.println("Failed to update user. Response: " + response.getBody());
         return false;
+	}
+	
+	private String getJwtToken() {
+    	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession();
+        return (String) session.getAttribute("jwtToken");
 	}
 }
 

@@ -17,7 +17,6 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 
-import com.kerem.userman.holder.JwtHolder;
 import com.kerem.userman.model.SignInCredential;
 import com.kerem.userman.model.User;
 import com.kerem.userman.service.AuthService;
@@ -27,10 +26,7 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Value("${auth.api.url}")
     private String authApiUrl;
-	
-	@Autowired
-	private JwtHolder jwtHolder;
-	
+
 	private final RestTemplate restTemplate;
 	private final HttpHeaders headers;
 
@@ -51,7 +47,6 @@ public class AuthServiceImpl implements AuthService {
 
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 		    String token = authorizationHeader.substring("Bearer ".length());
-		    jwtHolder.setJwtToken(token);
 			return token;
 		} else {
 			return null;
