@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AuthService {
 	String login(SignInCredential signInCredential);
+	void saveJwtTokenLocal(String jwtToken);
 }

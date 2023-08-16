@@ -6,4 +6,5 @@ com\kerem\userman\aop\LoggingAspect.class
 com\kerem\userman\service\impl\AuthServiceImpl.class
 com\kerem\userman\model\SignInCredential.class
 com\kerem\userman\service\UserService.class
+com\kerem\userman\holder\JwtHolder.class
 com\kerem\userman\model\User.class

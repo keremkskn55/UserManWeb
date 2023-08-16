@@ -1,6 +1,7 @@
 package com.kerem.userman.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -16,7 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -53,11 +57,18 @@ public class AuthController {
         
         if (token != null) {
         	model.addAttribute("jwtToken", token);
-        	return "login-loading";
+        	return "token-loader";
         }
         else {
         	model.addAttribute("errorMessage", "Failed to login. Please try again.");
             return "login";
         } 
+    }
+	
+	@PostMapping("/tokenChecker")
+    public String processToken(@RequestBody String jwtToken) {
+		authService.saveJwtTokenLocal(jwtToken);
+		
+        return "redirect:/users/addUser";
     }
 }

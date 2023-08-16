@@ -57,4 +57,9 @@ public class AuthServiceImpl implements AuthService {
 			return null;
 		}
 	}
+
+	@Override
+	public void saveJwtTokenLocal(String jwtToken) {
+		jwtHolder.setJwtToken(jwtToken);
+	}
 }
