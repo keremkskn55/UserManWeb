@@ -5,6 +5,9 @@ import javax.validation.constraints.Max;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"roleId"})
 public class User {
 	public int id;
 	
@@ -20,6 +23,11 @@ public class User {
 	@Min(value = 18, message = "Must bigger than 18")
 	@Max(value = 110, message = "Must smaller than 110")
 	private int age;
+	
+	private Role role;
+	
+	private Integer roleId;
+
 	
 	public User() {}
 
@@ -96,6 +104,26 @@ public class User {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	@Override

@@ -32,6 +32,13 @@
                     <form:input path="age" class="form-control"/>
                     <form:errors path="age" cssClass="text-danger" />
                 </div>
+                <div class="form-group">
+                    <label for="roleId">Select Role:</label>
+                    <form:select path="roleId" class="form-control" id="roleId">
+                        <form:option value="" label="Select a Role" />
+                        <form:options items="${roles}" itemValue="id" itemLabel="name" />
+                    </form:select>
+                </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form:form>
         </div>

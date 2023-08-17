@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.kerem.userman.model.Role;
 import com.kerem.userman.model.User;
+import com.kerem.userman.service.RoleService;
 import com.kerem.userman.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,12 @@ public class UserController {
 	
 	
 	private final UserService userService;
+	private final RoleService roleService;
 	
 	@Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
 
@@ -39,7 +43,10 @@ public class UserController {
 	
 	@GetMapping("/addUser")
     public String saveUser(Model model) {
-		model.addAttribute("user", new User());
+		User user = new User();
+		model.addAttribute("user", user);
+		List<Role> roles = roleService.getRoles();
+		model.addAttribute("roles", roles);
         return "add-user";
     }
 	
@@ -48,7 +55,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 	        return "add-user";
 	    }
-		
+		user.setRole(roleService.getRoleById(user.getRoleId()));
 		boolean isAdded = userService.addUser(user);
         
         if (isAdded) {
@@ -79,6 +86,8 @@ public class UserController {
 	public String updateUserById(@PathVariable("id") int id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
+		List<Role> roles = roleService.getRoles();
+		model.addAttribute("roles", roles);
     	return "edit-user";
     }
 	
@@ -87,7 +96,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 	        return "edit-user";
 	    }
-		
+		user.setRole(roleService.getRoleById(user.getRoleId()));
 		boolean isUpdated = userService.updateUser(user);
         if (isUpdated) {
         	return "redirect:/users/userList";

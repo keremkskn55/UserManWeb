@@ -11,6 +11,7 @@
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Age</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                     <td>${user.name}</td>
                     <td>${user.surname}</td>
                     <td>${user.age}</td>
+                    <td>${user.role.name}</td>
                     <td>
                         <!-- Edit button with a link to editUser?id=${user.id} -->
                         <a href="${pageContext.request.contextPath}/users/updateUser/${user.id}" class="btn btn-primary btn-sm mr-2">Edit</a>

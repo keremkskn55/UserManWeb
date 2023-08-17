@@ -28,14 +28,29 @@ public class LoggingAspect {
 	public void userControllerPointcut( ) {
 		// NO-OP
 	}
+	
+	@Pointcut("execution(* com.kerem.userman.controller.RoleController.*(..))")
+	public void roleControllerPointcut( ) {
+		// NO-OP
+	}
 
-    @Before("userControllerPointcut()")
-    public void userControllerBeforeMethods(JoinPoint joinPoint) {
-    	beforeLog(joinPoint);
+    @Before("userControllerPointcut() || roleControllerPointcut()")
+    public void logControllerBeforeMethods(JoinPoint joinPoint) {
+    	String className = joinPoint.getTarget().getClass().getSimpleName();
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String httpMethod = request.getMethod();
+        StringBuilder argString = new StringBuilder();
+        for (Object arg : args) {
+            argString.append(arg).append(", ");
+        }
+        
+        log.info("Executing [" + httpMethod + "]" + className + "." + methodName + "(), Arguments: " + argString);
         
     }
     
-    @AfterReturning(pointcut = "userControllerPointcut()", returning = "result")
+    @AfterReturning(pointcut = "userControllerPointcut() || roleControllerPointcut()", returning = "result")
     public void logControllerAfterMethods(JoinPoint joinPoint, Object result) {
     	String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
@@ -46,7 +61,7 @@ public class LoggingAspect {
         log.info("Executed [" + httpMethod + "]" + className + "." + methodName + "(), Go page: " + result);
     }
     
-    @Around("userControllerPointcut()")
+    @Around("userControllerPointcut() || roleControllerPointcut()")
     public Object handleControllerMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
         	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -70,17 +85,4 @@ public class LoggingAspect {
         }
     }
     
-    private void beforeLog(JoinPoint joinPoint) {
-    	String className = joinPoint.getTarget().getClass().getSimpleName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] args = joinPoint.getArgs();
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String httpMethod = request.getMethod();
-        StringBuilder argString = new StringBuilder();
-        for (Object arg : args) {
-            argString.append(arg).append(", ");
-        }
-        
-        log.info("Executing [" + httpMethod + "]" + className + "." + methodName + "(), Arguments: " + argString);
-    }
 }

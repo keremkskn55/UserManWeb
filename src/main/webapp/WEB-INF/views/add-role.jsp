@@ -13,43 +13,28 @@
             </c:if>
             <form:form modelAttribute="role" method="post">
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <form:input path="email" class="form-control"/>
-                    <form:errors path="email" cssClass="text-danger" />
-                </div>
-                <div class="form-group">
-                    <label for="name">Name:</label>
+                    <label for="email">Name:</label>
                     <form:input path="name" class="form-control"/>
                     <form:errors path="name" cssClass="text-danger" />
                 </div>
                 <div class="form-group">
-                    <label for="surname">Surname:</label>
-                    <form:input path="surname" class="form-control"/>
-                    <form:errors path="surname" cssClass="text-danger" />
-                </div>
-                <div class="form-group">
-                    <label for="age">Age:</label>
-                    <form:input path="age" class="form-control"/>
-                    <form:errors path="age" cssClass="text-danger" />
-                </div>
-                <div class="form-group">
                     <label for="canUserAdd">Can Add User:</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="canUserAdd">
+                        <input type="checkbox" class="custom-control-input" id="canUserAdd" name="canUserAdd">
                         <label class="custom-control-label" for="canUserAdd">Can Add User</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="canUserEdit">Can Edit User:</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="canUserEdit">
+                        <input type="checkbox" class="custom-control-input" id="canUserEdit" name="canUserEdit">
                         <label class="custom-control-label" for="canUserEdit">Can Edit User</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="canUserDelete">Can Delete User:</label>
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="canUserDelete">
+                        <input type="checkbox" class="custom-control-input" id="canUserDelete" name="canUserDelete">
                         <label class="custom-control-label" for="canUserDelete">Can Delete User</label>
                     </div>
                 </div>

@@ -21,6 +21,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/users/userList">User List</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/roles/addRole">Add Role</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/roles/roleList">Role List</a>
+                </li>
             </ul>
         </div>
     </nav>

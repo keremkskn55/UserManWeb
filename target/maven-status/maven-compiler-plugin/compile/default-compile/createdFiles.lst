@@ -1,7 +1,12 @@
+com\kerem\userman\controller\RoleController.class
 com\kerem\userman\service\impl\UserServiceImpl.class
 com\kerem\userman\controller\UserController.class
 com\kerem\userman\controller\AuthController.class
 com\kerem\userman\service\AuthService.class
+com\kerem\userman\service\impl\RoleServiceImpl.class
+com\kerem\userman\model\Role.class
+com\kerem\userman\model\RegisterCredential.class
+com\kerem\userman\service\RoleService.class
 com\kerem\userman\aop\LoggingAspect.class
 com\kerem\userman\service\impl\AuthServiceImpl.class
 com\kerem\userman\model\SignInCredential.class
