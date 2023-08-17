@@ -11,13 +11,13 @@
 <div class="container mt-5">
     <div class="card">
         <div class="card-header">
-            <h2 class="mb-0">Login Page</h2>
+            <h2 class="mb-0">Register Page</h2>
         </div>
         <div class="card-body">
             <c:if test="${not empty errorMessage}">
                 <p class="text-danger">${errorMessage}</p>
             </c:if>
-            <form:form modelAttribute="signInCredential" method="post">
+            <form:form modelAttribute="registerCredential" method="post">
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <form:input path="email" class="form-control"/>
@@ -28,10 +28,25 @@
                     <form:input path="password" class="form-control" type="password"/>
                     <form:errors path="password" cssClass="text-danger" />
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <form:input path="name" class="form-control"/>
+                    <form:errors path="name" cssClass="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname:</label>
+                    <form:input path="surname" class="form-control"/>
+                    <form:errors path="surname" cssClass="text-danger" />
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <form:input path="age" class="form-control"/>
+                    <form:errors path="age" cssClass="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
             </form:form>
             <div class="mt-3">
-                <a href="/UserManWeb/auth/register" class="btn btn-secondary">Register</a>
+                <a href="/UserManWeb/auth/signIn" class="btn btn-secondary">Login</a>
             </div>
         </div>
     </div>

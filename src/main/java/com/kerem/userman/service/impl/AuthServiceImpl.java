@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 
+import com.kerem.userman.model.RegisterCredential;
 import com.kerem.userman.model.SignInCredential;
 import com.kerem.userman.model.User;
 import com.kerem.userman.service.AuthService;
@@ -40,6 +41,24 @@ public class AuthServiceImpl implements AuthService {
 	public String login(SignInCredential signInCredential) {
 		HttpEntity<SignInCredential> requestEntity = new HttpEntity<>(signInCredential, headers);
 		ResponseEntity<String> response = restTemplate.exchange(authApiUrl + "/signIn", HttpMethod.POST, requestEntity, String.class);
+		if (response.getStatusCode() != HttpStatus.OK) {
+            return null;
+        }
+		String authorizationHeader = response.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+
+		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+		    String token = authorizationHeader.substring("Bearer ".length());
+			return token;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public String register(RegisterCredential registerCredential) {
+		HttpEntity<RegisterCredential> requestEntity = new HttpEntity<>(registerCredential, headers);
+		ResponseEntity<String> response = restTemplate.exchange(authApiUrl + "/register", HttpMethod.POST, requestEntity, String.class);
+		
 		if (response.getStatusCode() != HttpStatus.OK) {
             return null;
         }

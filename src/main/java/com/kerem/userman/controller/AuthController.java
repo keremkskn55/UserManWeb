@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.kerem.userman.model.RegisterCredential;
 import com.kerem.userman.model.SignInCredential;
 import com.kerem.userman.model.User;
 import com.kerem.userman.service.AuthService;
@@ -52,6 +53,31 @@ public class AuthController {
 	    }
 		
 		String token = authService.login(signInCredential);
+		
+        if (token != null) {
+        	HttpSession session = request.getSession();
+    	    session.setAttribute("jwtToken", token);
+        	return "redirect:/users/addUser";
+        }
+        else {
+        	model.addAttribute("errorMessage", "Failed to login. Please try again.");
+            return "login";
+        } 
+    }
+	
+	@GetMapping("/register")
+    public String registerUser(Model model) {
+		model.addAttribute("registerCredential", new RegisterCredential());
+        return "register";
+    }
+	
+	@PostMapping("/register")
+    public String registerUser(HttpServletRequest request, @Valid RegisterCredential registerCredential, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+	        return "register";
+	    }
+		
+		String token = authService.register(registerCredential);
 		
         if (token != null) {
         	HttpSession session = request.getSession();
